@@ -1,0 +1,69 @@
+const { Collection } = require('../models');
+
+async function getAllCollection() {
+  try {
+    const collections = await Collection.findAll();
+    return collections;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Error retrieving collections.');
+  }
+}
+
+async function getOneCollection(collectionId) {
+  try {
+    const collection = await Collection.findByPk(collectionId);
+    if (!collection) {
+      throw new Error('Collection not found.');
+    }
+    return collection;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Error retrieving collection details.');
+  }
+}
+
+async function createCollection(newcollectionData) {
+  try {
+    const createdCollection = await Collection.create(newCollectionData);
+    return createdCollection;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Error creating collection.');
+  }
+}
+
+async function updateCollection(collectionId, updatedCollectionData) {
+  try {
+    const collection = await Collection.findByPk(collectionId);
+    if (!collection) {
+      throw new Error('collection not found.');
+    }
+    await collection.update(updatedCollectionData);
+    return collection;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Error updating collection details.');
+  }
+}
+
+async function deleteCollection(collectionId) {
+  try {
+    const collection = await Collection.findByPk(collectionId);
+    if (!collection) {
+      throw new Error('Collection not found.');
+    }
+    await collection.destroy();
+  } catch (error) {
+    console.error(error);
+    throw new Error('Error deleting collection.');
+  }
+}
+
+module.exports = {
+  getAllCollection,
+  getOneCollection,
+  createCollection,
+  updateCollection,
+  deleteCollection,
+};
