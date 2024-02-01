@@ -1,63 +1,32 @@
-//HTTP Interaction
+//HTTP Interaction 
+const userService = require('./../services/userService');
 
-const userService = require('../services/userService');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const jwt = process.env.SECRET_KEY;
-
+// Create user
 async function createUser(req, res) {
-  try {
-    const { username, password } = req.body;
-
-    // Verify is user exists
-    const existingUser = await userService.getUserByUsername(username);
-    if (existingUser) {
-      return res.status(400).json({ error: 'Username already exists.' });
+    try {
+        const result = await userService.createUser(req.body.username, req.body.password, req.body.email);
+        res.status(200).json({ message: "Usuario creado", result });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al crear el usuario.' });
     }
-
-    // Hash of password
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-
-    const newUser = {
-      username,
-      password: hashedPassword,
-    };
-
-    const createdUser = await userService.createUser(newUser);
-    res.status(201).json({ message: 'User created successfully', user: createdUser });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error creating user.' });
-  }
 }
 
-async function login(req, res) {
-  try {
-    const { username, password } = req.body;
-
-    // Verify if the user is already existing
-    const user = await userService.getUserByUsername(username);
-    if (!user) {
-      return res.status(401).json({ error: 'Invalid username or password.' });
+// Loging
+async function loginUser(req, res) {
+    try {
+        const { token, error } = await userService.validateUser(req.body.username, req.body.password);
+        if (error) {
+            return res.status(401).json({ error });
+        }
+        res.status(200).json({ message: "Token generado expira en 12 horas", token });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error al loguearse.' });
     }
-
-    // Compare passwords
-    const compare = await bcrypt.compare(password, user.password);
-    if (!compare) {
-      return res.status(401).json({ error: 'Invalid username or password.' });
-    }
-
-    // Generate JWT token
-    const token = jwt.sign({ id: user.id, username: user.username }, jwtSecret, { expiresIn: '1h' });
-    res.status(200).json({ message: 'Login successful', token });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error logging in.' });
-  }
 }
 
 module.exports = {
-  createUser,
-  login,
+    createUser,
+    loginUser
 };

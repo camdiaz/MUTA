@@ -13,10 +13,10 @@ async function getAllMaterials(req, res) {
 }
 
 // Get a material
-async function getOneMaterial(req, res) {
+async function getMaterial(req, res) {
   const { materialId } = req.params;
   try {
-    const material = await materialService.getOneMaterial(materialId);
+    const material = await materialService.getMaterial(materialId);
     res.status(200).json(material);
   } catch (error) {
     console.error(error);
@@ -24,7 +24,7 @@ async function getOneMaterial(req, res) {
   }
 }
 
-//Create a new material
+//Create a material
 async function createMaterial(req, res) {
   const newMaterialData = req.body;
   try {
@@ -49,7 +49,6 @@ async function updateMaterial(req, res) {
   }
 }
 
-
 //Delete a material
 async function deleteMaterial(req, res) {
   const { materialId } = req.params;
@@ -64,7 +63,7 @@ async function deleteMaterial(req, res) {
 
 module.exports = {
   getAllMaterials,
-  getOneMaterial,
+  getMaterial,
   createMaterial,
   updateMaterial,
   deleteMaterial,

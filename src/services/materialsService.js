@@ -1,4 +1,5 @@
-const { Material } = require('../models');
+// All about logic
+const { Material } = require('../../models');
 
 async function getAllMaterials() {
   try {
@@ -10,7 +11,7 @@ async function getAllMaterials() {
   }
 }
 
-async function getOneMaterial(materialId) {
+async function getMaterial(materialId) {
   try {
     const material = await Material.findByPk(materialId);
     if (!material) {
@@ -62,7 +63,7 @@ async function deleteMaterial(materialId) {
 
 module.exports = {
   getAllMaterials,
-  getOneMaterial,
+  getMaterial,
   createMaterial,
   updateMaterial,
   deleteMaterial,

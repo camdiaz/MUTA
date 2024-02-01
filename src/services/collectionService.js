@@ -1,4 +1,5 @@
-const { Collection } = require('../models');
+// All about logic
+const { Collection } = require('../../models');
 
 async function getAllCollection() {
   try {
@@ -10,7 +11,7 @@ async function getAllCollection() {
   }
 }
 
-async function getOneCollection(collectionId) {
+async function getCollection(collectionId) {
   try {
     const collection = await Collection.findByPk(collectionId);
     if (!collection) {
@@ -23,7 +24,7 @@ async function getOneCollection(collectionId) {
   }
 }
 
-async function createCollection(newcollectionData) {
+async function createCollection(newCollectionData) {
   try {
     const createdCollection = await Collection.create(newCollectionData);
     return createdCollection;
@@ -62,7 +63,7 @@ async function deleteCollection(collectionId) {
 
 module.exports = {
   getAllCollection,
-  getOneCollection,
+  getCollection,
   createCollection,
   updateCollection,
   deleteCollection,

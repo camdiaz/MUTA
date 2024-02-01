@@ -1,14 +1,31 @@
-const { User } = require('../models');
+// All about logic
 
-async function getUserByUsername(username) {
-  return await User.findOne({ where: { username } });
+const { User } = require('../../models');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+async function createUser(username, password, email) {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    return await User.create({ username, password: hashedPassword, email });
 }
 
-async function createUser(userData) {
-  return await User.create(userData);
+async function validateUser(username, password) {
+    const user = await User.findOne({ where: { username } });
+    if (!user) {
+        return { error: 'Usuario no encontrado' };
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+        return { error: 'Contraseña incorrecta' };
+    }
+
+    const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '12h' });
+    return { token };
 }
 
 module.exports = {
-  getUserByUsername,
-  createUser,
+    createUser,
+    validateUser
 };

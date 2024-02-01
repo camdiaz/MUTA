@@ -13,10 +13,10 @@ async function getAllCollections(req, res) {
 }
 
 // Get a collection
-async function getOneCollection(req, res) {
+async function getCollection(req, res) {
   const { collectionId } = req.params;
   try {
-    const collection = await collectionService.getOneCollection(collectionId);
+    const collection = await collectionService.getCollection(collectionId);
     res.status(200).json(collection);
   } catch (error) {
     console.error(error);
@@ -25,7 +25,7 @@ async function getOneCollection(req, res) {
 }
 
 // Create a new collection
-async function createNewCollection(req, res) {
+async function createCollection(req, res) {
   const newCollectionData = req.body;
   try {
     const createdCollection = await collectionService.createNewCollection(newCollectionData);
@@ -37,11 +37,11 @@ async function createNewCollection(req, res) {
 }
 
 // Update a collection
-async function updateOneCollection(req, res) {
+async function updateCollection(req, res) {
   const { collectionId } = req.params;
   const updatedCollectionData = req.body;
   try {
-    const updatedCollection = await collectionService.updateOneCollection(collectionId, updatedCollectionData);
+    const updatedCollection = await collectionService.updateCollection(collectionId, updatedCollectionData);
     res.status(200).json(updatedCollection);
   } catch (error) {
     console.error(error);
@@ -50,10 +50,10 @@ async function updateOneCollection(req, res) {
 }
 
 // Delete a collection
-async function deleteOneCollection(req, res) {
+async function deleteCollection(req, res) {
   const { collectionId } = req.params;
   try {
-    await collectionService.deleteOneCollection(collectionId);
+    await collectionService.deleteCollection(collectionId);
     res.status(204).send();
   } catch (error) {
     console.error(error);
@@ -63,8 +63,8 @@ async function deleteOneCollection(req, res) {
 
 module.exports = {
   getAllCollections,
-  getOneCollection,
-  createNewCollection,
-  updateOneCollection,
-  deleteOneCollection,
+  getCollection,
+  createCollection,
+  updateCollection,
+  deleteCollection,
 };

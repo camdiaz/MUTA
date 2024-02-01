@@ -1,15 +1,21 @@
+// materialsRoutes.js
 const express = require('express');
-const router = express.Router();
 const materialsController = require('../controllers/materialController');
-const authenticateToken = require('../middlewares/authMiddleware');
+const authorization = require('../middlewares/authorization');
+
+const router = express.Router();
 
 // Authentication middleware
-router.use(authenticateToken);
-router
-  .get('/materials', materialsController.getAllMaterials)
-  .get('/materials/:id', materialsController.getOneMaterial)
-  .post('/materials', materialsController.createMaterial)
-  .put('/materials/:id', materialsController.updateMaterial)
-  .delete('/materials/:id', materialsController.deleteMaterial)
+router.use(authorization.verifyToken);
+
+// Routes protected
+router.route('/materials')
+  .get(materialsController.getAllMaterials)
+  .post(materialsController.createMaterial)
+
+router.route('/materials/:id')
+  .get(materialsController.getMaterial)
+  .put(materialsController.updateMaterial)
+  .delete(materialsController.deleteMaterial)
 
 module.exports = router;

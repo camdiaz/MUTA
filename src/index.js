@@ -1,29 +1,25 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
-const materialsRouter = require('./routes/materialsRoutes');
-const collectionsRouter = require('./routes/collectionsRoutes');
-const userRouter = require('./routes/userRoutes');
-const authMiddleware = require('./middlewares/authMiddleware');
+const dotenv = require('dotenv');
+const materialRoutes = require('./routes/materialsRoutes');
+const collectionRoutes = require('./routes/collectionsRoutes');
+const userRoutes = require('./routes/userRoutes');
 
+dotenv.config();
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3030;
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(userRoutes);
+app.use(materialRoutes);
+app.use(collectionRoutes);
 
-// Public routes (without authentication)
-app.use('/login', userRouter);
+app.get('/', (req, res) => res.status(200).send({
+  message: 'Server connected',
+}));
 
-// Middleware of authentication for private routes
-app.use(authMiddleware);
-
-// Private routes (They need authentication)
-app.use('/materials', materialsRouter);
-app.use('/collections', collectionsRouter);
-
-// Server
 app.listen(PORT, () => {
   console.log(`⚡ Server listening on port ${PORT}`);
 });
