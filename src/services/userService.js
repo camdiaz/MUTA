@@ -13,12 +13,12 @@ async function createUser(username, password, email) {
 async function validateUser(username, password) {
     const user = await User.findOne({ where: { username } });
     if (!user) {
-        return { error: 'Usuario no encontrado' };
+        return { error: 'User not found. Please try again.' };
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-        return { error: 'Contraseña incorrecta' };
+        return { error: 'Incorrect password. Please, try again.' };
     }
 
     const token = jwt.sign({ id: user.id, username: user.username }, process.env.JWT_SECRET, { expiresIn: '12h' });

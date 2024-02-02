@@ -1,7 +1,7 @@
 // All about logic
 const { Collection } = require('../../models');
 
-async function getAllCollection() {
+async function getAllCollections() {
   try {
     const collections = await Collection.findAll();
     return collections;
@@ -11,9 +11,9 @@ async function getAllCollection() {
   }
 }
 
-async function getCollection(collectionId) {
+async function getCollection(id) {
   try {
-    const collection = await Collection.findByPk(collectionId);
+    const collection = await Collection.findByPk(id);
     if (!collection) {
       throw new Error('Collection not found.');
     }
@@ -34,11 +34,11 @@ async function createCollection(newCollectionData) {
   }
 }
 
-async function updateCollection(collectionId, updatedCollectionData) {
+async function updateCollection(id, updatedCollectionData) {
   try {
-    const collection = await Collection.findByPk(collectionId);
+    const collection = await Collection.findByPk(id);
     if (!collection) {
-      throw new Error('collection not found.');
+      throw new Error('Collection not found.');
     }
     await collection.update(updatedCollectionData);
     return collection;
@@ -48,9 +48,9 @@ async function updateCollection(collectionId, updatedCollectionData) {
   }
 }
 
-async function deleteCollection(collectionId) {
+async function deleteCollection(id) {
   try {
-    const collection = await Collection.findByPk(collectionId);
+    const collection = await Collection.findByPk(id);
     if (!collection) {
       throw new Error('Collection not found.');
     }
@@ -62,7 +62,7 @@ async function deleteCollection(collectionId) {
 }
 
 module.exports = {
-  getAllCollection,
+  getAllCollections,
   getCollection,
   createCollection,
   updateCollection,

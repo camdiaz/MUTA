@@ -5,59 +5,59 @@ const collectionService = require('../services/collectionService');
 async function getAllCollections(req, res) {
   try {
     const collections = await collectionService.getAllCollections();
-    res.status(200).json(collections);
+    res.status(200).json({message: "Collections:", collections});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Collections not found. Please try again.' });
   }
 }
 
 // Get a collection
 async function getCollection(req, res) {
-  const { collectionId } = req.params;
   try {
-    const collection = await collectionService.getCollection(collectionId);
-    res.status(200).json(collection);
+    const { id } = req.params;
+    const collection = await collectionService.getCollection(id);
+    res.status(200).json({message: "Collection:", collection});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Collection not found. Please try again.' });
   }
 }
 
 // Create a new collection
 async function createCollection(req, res) {
-  const newCollectionData = req.body;
   try {
-    const createdCollection = await collectionService.createNewCollection(newCollectionData);
-    res.status(201).json(createdCollection);
+    const newCollectionData = req.body;
+    const createdCollection = await collectionService.createCollection(newCollectionData);
+    res.status(201).json({message: "Collections created:", createdCollection});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Collection not created. Please try again.' });
   }
 }
 
 // Update a collection
 async function updateCollection(req, res) {
-  const { collectionId } = req.params;
   const updatedCollectionData = req.body;
+  const { id } = req.params;
   try {
-    const updatedCollection = await collectionService.updateCollection(collectionId, updatedCollectionData);
-    res.status(200).json(updatedCollection);
+    const updatedCollection = await collectionService.updateCollection(id, updatedCollectionData);
+    res.status(200).json({message: "Collection updated:", updatedCollection});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Collection not updated. Please try again.' });
   }
 }
 
 // Delete a collection
 async function deleteCollection(req, res) {
-  const { collectionId } = req.params;
   try {
-    await collectionService.deleteCollection(collectionId);
-    res.status(204).send();
+    const { id } = req.params;
+    await collectionService.deleteCollection(id);
+    res.status(200).json({ error: 'Collection deleted:', id });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Collection not deleted. Please, try again.' });
   }
 }
 

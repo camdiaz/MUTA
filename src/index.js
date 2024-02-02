@@ -1,9 +1,10 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const materialRoutes = require('./routes/materialsRoutes');
-const collectionRoutes = require('./routes/collectionsRoutes');
+const materialRoutes = require('./routes/materialRoutes');
+const collectionRoutes = require('./routes/collectionRoutes');
 const userRoutes = require('./routes/userRoutes');
+const recyclingRoutes = require('./routes/recyclingRoutes')
 
 dotenv.config();
 const app = express();
@@ -15,9 +16,10 @@ app.use(express.json());
 app.use(userRoutes);
 app.use(materialRoutes);
 app.use(collectionRoutes);
+app.use(recyclingRoutes);
 
 app.get('/', (req, res) => res.status(200).send({
-  message: 'Server connected',
+  message: 'MUTA TEST SERVER',
 }));
 
 app.listen(PORT, () => {

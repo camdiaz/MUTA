@@ -1,13 +1,19 @@
 const cors = require('cors');
 const createError = require('http-errors');
 
+// To conect a service of backend
+const BACKEND_WHITELIST = {
+    'http://localhost:3001': true,
+};
+
+// To conect a service of frontend
 const FRONTEND_WHITELIST = {
     'http://localhost:5173': true,
 };
 
 const CORS_OPTION = {
     origin: (origin, next) => {
-        if ((FRONTEND_WHITELIST[origin]) || !origin) {
+        if ((BACKEND_WHITELIST[origin])||(FRONTEND_WHITELIST[origin]) || !origin) {
             next(null, true);
         } else {
             next(createError(401, 'Not allowed by CORS'));

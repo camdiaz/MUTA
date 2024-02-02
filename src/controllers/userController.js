@@ -5,10 +5,10 @@ const userService = require('./../services/userService');
 async function createUser(req, res) {
     try {
         const result = await userService.createUser(req.body.username, req.body.password, req.body.email);
-        res.status(200).json({ message: "Usuario creado", result });
+        res.status(200).json({ message: "User created:", result });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Error al crear el usuario.' });
+        res.status(500).json({ error: 'Error to create user' });
     }
 }
 
@@ -19,10 +19,10 @@ async function loginUser(req, res) {
         if (error) {
             return res.status(401).json({ error });
         }
-        res.status(200).json({ message: "Token generado expira en 12 horas", token });
+        res.status(200).json({ message: "Token expire in 12 hours:", token });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'Error al loguearse.' });
+        res.status(500).json({ error: 'Login error.' });
     }
 }
 

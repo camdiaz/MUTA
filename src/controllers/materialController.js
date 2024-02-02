@@ -1,63 +1,63 @@
 //HTTP Interaction 
-const materialService = require('../services/materialsService');
+const materialService = require('../services/materialService');
 
 // Get all the materials
 async function getAllMaterials(req, res) {
   try {
     const materials = await materialService.getAllMaterials();
-    res.status(200).json(materials);
+    return res.status(200).json({message: "Materials:", materials});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Materials not found. Please try again.' });
   }
 }
 
 // Get a material
 async function getMaterial(req, res) {
-  const { materialId } = req.params;
   try {
-    const material = await materialService.getMaterial(materialId);
-    res.status(200).json(material);
+    const { id } = req.params;
+    const material = await materialService.getMaterial(id);
+    res.status(200).json({message: "Material by id:", material});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Material not found. Please try again.' });
   }
 }
 
 //Create a material
 async function createMaterial(req, res) {
-  const newMaterialData = req.body;
   try {
+    const newMaterialData = req.body;
     const createdMaterial = await materialService.createMaterial(newMaterialData);
-    res.status(201).json(createdMaterial);
+    res.status(201).json({message: "Material created:", createdMaterial});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Material not created. Please, try again.' });
   }
 }
 
 //Update a material
 async function updateMaterial(req, res) {
-  const { materialId } = req.params;
-  const updatedMaterialData = req.body;
   try {
-    const updatedMaterial = await materialService.updateMaterial(materialId, updatedMaterialData);
-    res.status(200).json(updatedMaterial);
+    const { id } = req.params;
+    const updatedMaterialData = req.body;
+    const updatedMaterial = await materialService.updateMaterial(id, updatedMaterialData);
+    res.status(200).json({message: "Material updated:", updatedMaterial});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Material not updated. Please, try again.' });
   }
 }
 
 //Delete a material
 async function deleteMaterial(req, res) {
-  const { materialId } = req.params;
   try {
-    await materialService.deleteMaterial(materialId);
-    res.status(204).send();
+    const { id } = req.params;
+    await materialService.deleteMaterial(id);
+    res.status(200).json({ error: 'Material deleted:', id });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Material not deleted. Please try again.' });
   }
 }
 
