@@ -3,7 +3,7 @@
 
 ## :memo: Instrucciones.
 
-A continuacion encontrarás las intrucciones para ejecutar el proyecto en local
+A continuacion encontrarás las instrucciones para ejecutar el proyecto en local
 
 `Nota:` Debe estar `node`, `npm` y `git` instalado en la camputadora.
 
@@ -38,7 +38,7 @@ Una vez instaladas todas las dependencias del proyecto, ejecute el comando `npm 
 
 ### Paso 7
 
-Con to anterior puede observar en su consula que se muestra un `Version 1 Docs are available at http://localhost:3030/api/docs` (link para visualizar la documentacion de la API) y ademas, se confirma que servidor esta siendo escuchando en el puerto 3030
+Con lo anterior puede observar en su consola que se muestra un `Version 1 Docs are available at http://localhost:3030/api/docs` (link para visualizar la documentacion de la API) y ademas, se confirma que servidor esta siendo escuchando en el puerto 3030
 
 ### :wrench: Herramientas 
 
