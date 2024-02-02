@@ -1,5 +1,5 @@
 const express = require('express');
-const recyclingRoute  = require('./../controllers/recyclingController');
+const { recyclingRoute }  = require('../controllers/recyclingController');
 const authorization = require('../middlewares/authorization');
 
 const router = express.Router();
@@ -7,69 +7,80 @@ const router = express.Router();
 // Documentation with swagger
 /**
  * @openapi
- * tags:
- *   name: Recycling
- *   description: Operations related to recycling
+ * components:
+ *   schemas:
+ *     RecyclingMaterial:
+ *       type: object
+ *       properties:
+ *         nombre:
+ *           type: string
+ *           example: "plástico"
+ *         peso:
+ *           type: number
+ *           example: 14
+ *         valor:
+ *           type: number
+ *           example: 7
+ *     RecyclingRequest:
+ *       type: object
+ *       required:
+ *         - materials
+ *         - maxPeso
+ *       properties:
+ *         materials:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/RecyclingMaterial'
+ *         maxPeso:
+ *           type: number
+ *           example: 50
+ *     RecyclingResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *           example: "Optimal recycling route"
+ *         ruta:
+ *           type: array
+ *           items:
+ *             type: object
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *                 example: "vidrio"
+ *               peso:
+ *                 type: string
+ *                 example: "1 Kg"
+ *         valorTotal:
+ *           type: number
+ *           example: 4
  */
-
 /**
  * @openapi
  * /recycling/route:
  *   post:
  *     tags:
- *       - Recycling
+ *       - Recycling Route
  *     summary: Perform a recycling operation
  *     description: Submits recycling data to the system.
- *     security:
- *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             required:
- *               - materialId
- *               - quantity
- *             properties:
- *               materialId:
- *                 type: string
- *                 description: The unique identifier for the material being recycled.
- *               quantity:
- *                 type: number
- *                 description: The amount of material being recycled.
- *             example:
- *               materialId: "12345"
- *               quantity: 10
+ *             $ref: '#/components/schemas/RecyclingRequest'
  *     responses:
  *       201:
  *         description: Recycling data successfully submitted.
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 status:
- *                   type: string
- *                   example: success
- *                 data:
- *                   type: object
- *                   properties:
- *                     materialId:
- *                       type: string
- *                       example: "12345"
- *                     quantity:
- *                       type: number
- *                       example: 10
- *                 message:
- *                   type: string
- *                   example: "Recycling data recorded successfully."
+ *               $ref: '#/components/schemas/RecyclingResponse'
  *       400:
  *         description: Bad request. The request body is missing required fields or contains invalid data.
  *       401:
  *         description: Unauthorized. User is not authenticated.
  */
-
 
 // Authentication middleware
 router.use(authorization.verifyToken);

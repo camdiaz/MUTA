@@ -15,9 +15,9 @@
   },
   "production": {
     "username": "root",
-    "password": "N8WOM4kjFiIgzaWGVpIPw28voQuquCxq",
-    "database": "db_development_9rbe",
-    "host": "dpg-cmssbgol6cac73aon650-a",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
     "dialect": "postgres"
   }
 }

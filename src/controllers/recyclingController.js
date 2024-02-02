@@ -1,11 +1,13 @@
+//HTTP Interaction 
 const { calculateRecyclingRoute } = require('./../services/recyclingService');
 
+// Recycling route
 async function recyclingRoute(req, res) {
   try {
     const materialList = ["plástico", "cartón", "vidrio","metales"];
-    const { materials, maxWeight } = req.body;
+    const { materials, maxPeso } = req.body;
 
-    if (!Array.isArray(materials) || typeof maxWeight !== 'number' || maxWeight <= 0) {
+    if (!Array.isArray(materials) || typeof maxPeso !== 'number' || maxPeso <= 0) {
       return res.status(400).json({ message: "Invalid information" });
     }
 
@@ -16,7 +18,7 @@ async function recyclingRoute(req, res) {
         material.valor > 0
       );
 
-    const { chosenResources, totalValue } = await calculateRecyclingRoute(chosenMaterials, maxWeight);
+    const { chosenResources, totalValue } = await calculateRecyclingRoute(chosenMaterials, maxPeso);
 
     return res.status(200).json({
       message: "Optimal recycling route",
@@ -32,4 +34,4 @@ async function recyclingRoute(req, res) {
   }
 }
 
-module.exports = recyclingRoute;
+module.exports = { recyclingRoute };

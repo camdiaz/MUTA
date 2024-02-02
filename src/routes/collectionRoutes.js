@@ -5,12 +5,31 @@ const authorization = require('../middlewares/authorization');
 const router = express.Router();
 
 // Documentation with swagger
-
 /**
  * @openapi
- * tags:
- *   name: Collections
- *   description: Operations related to collections
+ * components:
+ *   schemas:
+ *     Collections:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           format: int64
+ *         materialId:
+ *           type: integer
+ *           format: int64
+ *         quantity:
+ *           type: integer
+ *           format: int64
+ *         collectionDate:
+ *           type: string
+ *           format: date-time
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
  */
 
 /**
@@ -29,7 +48,7 @@ const router = express.Router();
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#components/responses/collections'
+ *                  type: object
  *   post:
  *     tags:
  *       - Collections
@@ -40,14 +59,14 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#omponents/schemas/collections'
+ *             type: object
  *     responses:
- *       201:
+ *       200:
  *         description: The created collection.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#components/schemas/collections'
+ *               $ref: '#components/schemas/Collections'
  */
 
 /**
@@ -64,14 +83,14 @@ const router = express.Router();
  *         required: true
  *         description: The unique identifier of the collection.
  *         schema:
- *           type: string
+ *           type: integer
  *     responses:
  *       200:
  *         description: Details of the collection.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/omponents/schemas/collections'
+ *               $ref: '#components/schemas/Collections'
  *   put:
  *     tags:
  *       - Collections
@@ -83,20 +102,20 @@ const router = express.Router();
  *         required: true
  *         description: The unique identifier of the collection to update.
  *         schema:
- *           type: string
+ *           type: integer
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/responses/collections'
+ *             type: object
  *     responses:
  *       200:
  *         description: The updated collection.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/responses/collections'
+ *               $ref: '#/components/schemas/Collections'
  *   delete:
  *     tags:
  *       - Collections
@@ -108,7 +127,7 @@ const router = express.Router();
  *         required: true
  *         description: The unique identifier of the collection to delete.
  *         schema:
- *           type: string
+ *           type: integer
  *     responses:
  *       204:
  *         description: Collection deleted successfully.

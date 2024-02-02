@@ -1,14 +1,14 @@
 // All about logic
 
-async function calculateRecyclingRoute(materials, maxWeight) {
+async function calculateRecyclingRoute(materials, maxPeso) {
     try {
         materials.sort((a, b) => b.valor / b.peso - a.valor / a.peso);
         let totalValue = 0;
         const chosenResources = materials.reduce((acc, material) => {
-            if (maxWeight >= material.peso) {
+            if (maxPeso >= material.peso) {
                 acc.push(material);
                 totalValue += material.valor;
-                maxWeight -= material.peso;
+                maxPeso -= material.peso;
             }
             return acc;
         }, []);

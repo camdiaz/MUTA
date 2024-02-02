@@ -3,12 +3,28 @@ const userController = require('./../controllers/userController');
 const router = express.Router();
 
 // Documentation with swagger
-
 /**
  * @openapi
- * tags:
- *   name: User
- *   description: User management and authentication
+ * components:
+ *   schemas:
+ *     Users:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           format: int64
+ *         email:
+ *           type: string
+ *         name:
+ *           type: string
+ *         password:
+ *           type: string
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
  */
 
 /**
@@ -16,7 +32,7 @@ const router = express.Router();
  * /user/create:
  *   post:
  *     tags:
- *       - User
+ *       - Users
  *     summary: Create a new user
  *     description: Registers a new user with the provided information.
  *     requestBody:
@@ -57,7 +73,7 @@ const router = express.Router();
  * /user/login:
  *   post:
  *     tags:
- *       - User
+ *       - Users
  *     summary: User login
  *     description: Authenticates a user and returns an access token.
  *     requestBody:
@@ -93,7 +109,6 @@ const router = express.Router();
  *       401:
  *         description: Authentication failed. Incorrect username or password.
  */
-
 
 // These routes are not protected by authentication
 router.post('/user/create', userController.createUser);

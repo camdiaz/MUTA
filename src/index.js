@@ -5,12 +5,11 @@ const materialRoutes = require('./routes/materialRoutes');
 const collectionRoutes = require('./routes/collectionRoutes');
 const userRoutes = require('./routes/userRoutes');
 const recyclingRoutes = require('./routes/recyclingRoutes');
-// const { verifyToken } = require('./middlewares/authorization');
 const { swaggerDocs: SwaggerDocsV1 } = require('./routes/swagger');
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3030;
+const PORT = process.env.PORT || 3030; //Ejecution PORT
 
 SwaggerDocsV1(app, PORT);
 

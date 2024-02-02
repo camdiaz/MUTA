@@ -1,4 +1,3 @@
-// materialsRoutes.js
 const express = require('express');
 const materialController = require('../controllers/materialController');
 const authorization = require('../middlewares/authorization');
@@ -6,12 +5,28 @@ const authorization = require('../middlewares/authorization');
 const router = express.Router();
 
 // Documentation with swagger
-
 /**
  * @openapi
- * tags:
- *   name: Materials
- *   description: Operations related to materials
+ * components:
+ *   schemas:
+ *     Materials:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           format: int64
+ *         name:
+ *           type: string
+ *         weight:
+ *           type: float
+ *         value:
+ *           type: float
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
  */
 
 /**
@@ -30,7 +45,7 @@ const router = express.Router();
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#components/responses/materials'
+ *                 type: object
  *   post:
  *     tags:
  *       - Materials
@@ -41,14 +56,14 @@ const router = express.Router();
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#components/schemas/materials'
+ *             type: object
  *     responses:
- *       201:
+ *       200:
  *         description: The created material.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#components/schemas/materials'
+ *               $ref: '#components/schemas/Materials'
  */
 
 /**
@@ -65,14 +80,14 @@ const router = express.Router();
  *         required: true
  *         description: The unique identifier of the material.
  *         schema:
- *           type: string
+ *           type: integer
  *     responses:
  *       200:
  *         description: Details of the material.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#components/responses/materials'
+ *               $ref: '#components/schemas/Materials'
  *   put:
  *     tags:
  *       - Materials
@@ -84,20 +99,20 @@ const router = express.Router();
  *         required: true
  *         description: The unique identifier of the material to update.
  *         schema:
- *           type: string
+ *           type: integer
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#components/schemas/materials'
+ *             type: object
  *     responses:
  *       200:
  *         description: The updated material.
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#components/schemas/materials'
+ *               $ref: '#components/schemas/Materials'
  *   delete:
  *     tags:
  *       - Materials
@@ -109,7 +124,7 @@ const router = express.Router();
  *         required: true
  *         description: The unique identifier of the material to delete.
  *         schema:
- *           type: string
+ *           type: integer
  *     responses:
  *       204:
  *         description: Material deleted successfully.

@@ -1,20 +1,18 @@
 const cors = require('cors');
 const createError = require('http-errors');
 
-// Configuración de listas blancas
+// Configuration options for backend
 const BACKEND_WHITELIST = {
     'http://localhost:3001': true,
 };
-const FRONTEND_WHITELIST = {
-    'http://localhost:5173': true,
-};
+
 
 const CORS_OPTION = {
     origin: (origin, callback) => {
-        if (BACKEND_WHITELIST[origin] || FRONTEND_WHITELIST[origin] || !origin) {
-            callback(null, true); // Permite la solicitud
+        if (BACKEND_WHITELIST[origin] || !origin) {
+            callback(null, true);
         } else {
-            callback(createError(401, 'Not allowed by CORS')); // Bloquea la solicitud
+            callback(createError(401, 'Not allowed by CORS'));
         }
     },
     maxAge: 86400,
