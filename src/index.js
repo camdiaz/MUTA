@@ -4,13 +4,17 @@ const dotenv = require('dotenv');
 const materialRoutes = require('./routes/materialRoutes');
 const collectionRoutes = require('./routes/collectionRoutes');
 const userRoutes = require('./routes/userRoutes');
-const recyclingRoutes = require('./routes/recyclingRoutes')
+const recyclingRoutes = require('./routes/recyclingRoutes');
+// const { verifyToken } = require('./middlewares/authorization');
+const { swaggerDocs: SwaggerDocsV1 } = require('./routes/swagger');
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3030;
 
-// Middleware
+SwaggerDocsV1(app, PORT);
+
+// Middleware ----- These are using authentication. TAKE CARE ABOUT THE ORDER
 app.use(cors());
 app.use(express.json());
 app.use(userRoutes);

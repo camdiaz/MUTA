@@ -1,26 +1,25 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const JWT_SECRET  = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 function generateToken(userId) {
-  const token = jwt.sign({ user: userId }, JWT_SECRET, { expiresIn: '12h' });
-  return token;
+  return jwt.sign({ user: userId }, JWT_SECRET, { expiresIn: '12h' });
 }
 
 function verifyToken(req, res, next) {
-  const token = req.header('Authorization');
-
-  if (!token) {
+  const bearerHeader = req.headers['authorization'];
+  if (bearerHeader) {
+    const bearerToken = bearerHeader.split(' ')[1];
+    jwt.verify(bearerToken, JWT_SECRET, (error, decoded) => {
+      if (error) {
+        return res.status(401).json({ error: 'Unauthorized - Invalid token' });
+      }
+      req.user = decoded.user;
+      next();
+    });
+  } else {
     return res.status(401).json({ error: 'Unauthorized - Missing token' });
-  }
-
-  try {
-    const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded.user;
-    next();
-  } catch (error) {
-    return res.status(401).json({ error: 'Unauthorized - Invalid token' });
   }
 }
 
