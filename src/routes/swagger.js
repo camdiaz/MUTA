@@ -6,7 +6,7 @@ const options = {
   definition: {
     openapi: "3.0.0", // Specify the OpenAPI spec version
     info: {
-      title: "MUTA BACKEND API", // Title of the API
+      title: "TRANSACTIONS BACKEND API", // Title of the API
       version: '1.0.0' // Version of the API
     },
     components: {

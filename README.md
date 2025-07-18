@@ -1,4 +1,3 @@
-
 # :computer: MUTA Test
 
 ## :memo: Instrucciones.
@@ -56,3 +55,8 @@ Herramientas utilizadas
 ## :memo: Diagrama de la estructura de la base de datos.
 
 Se adjuntara por medio de correo electronico.
+
+## imagen perro
+
+![Imagen de un perro](https://res.cloudinary.com/douyiejyz/image/upload/v1752865302/pero_px1roq.jpg)
+

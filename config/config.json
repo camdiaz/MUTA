@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "postgres",
-    "password": 123456,
-    "database": "postgres",
-    "host": "127.0.0.1",
+    "password": "admin12345",
+    "database": "muta",
+    "host": "localhost",
     "dialect": "postgres"
   },
   "test": {
